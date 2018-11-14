@@ -1,0 +1,20 @@
+{
+  "name": "personal-workflow",
+  "version": "1.0.0",
+  "description": "web development workflow",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "gulpfile",
+    "js",
+    "scss",
+    "modern-workflow"
+  ],
+  "author": "Mauro Bono",
+  "license": "GPL-3.0",
+  "devDependencies": {
+    "gulp": "^3.9.1"
+  }
+}
