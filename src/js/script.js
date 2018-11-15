@@ -1,2 +1,3 @@
-// JS file
-//another comment
+import App from './modules/app';
+
+const app = new App();
