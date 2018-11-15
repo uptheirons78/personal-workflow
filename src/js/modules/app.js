@@ -1,5 +1,5 @@
 class App {
-  constructor {
+  constructor() {
     console.info('App Initialized');
   }
 }

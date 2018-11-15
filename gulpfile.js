@@ -3,14 +3,21 @@ const rename = require('gulp-rename');
 const sass = require('gulp-sass');
 const autoprefixer = require('gulp-autoprefixer');
 const sourcemaps = require('gulp-sourcemaps');
+const browserify = require('browserify');
+const babelify = require('babelify');
+const source = require('vinyl-source-stream');
+const buffer = require('vinyl-buffer');
+const uglify = require('gulp-uglify');
 
 const styleSRC = 'src/scss/style.scss';
 const styleDIST = './dist/css/';
 const styleWatch = 'src/scss/**/*.scss';
 
-const jsSRC = 'src/js/script.js';
+const jsSRC = 'script.js';
+const jsFolder = 'src/js/';
 const jsDIST = './dist/js/';
 const jsWatch = 'src/js/**/*.js';
+const jsFILES = [jsSRC];
 
 gulp.task('style', function() {
   gulp
@@ -35,9 +42,32 @@ gulp.task('style', function() {
 });
 
 gulp.task('js', function() {
-  // gulp.src( jsSRC )
-  //     .pipe(gulp.dest( jsDIST ));
-  //browserify
+  jsFILES.map(function(entry) {
+    //browserify
+    return (
+      browserify({
+        entries: [jsFolder + entry]
+      })
+        //transform babelify[env]
+        .transform('babelify', { presets: ['@babel/preset-env'] })
+        //bundle
+        .bundle()
+        //source
+        .pipe(source(entry))
+        //rename .min
+        .pipe(rename({ extname: '.min.js' }))
+        //buffer
+        .pipe(buffer())
+        //sourcemap
+        .pipe(sourcemaps.init({ loadMaps: true }))
+        //uglify
+        .pipe(uglify())
+        //write sourcemap
+        .pipe(sourcemaps.write('./'))
+        //save in dist
+        .pipe(gulp.dest(jsDIST))
+    );
+  });
 });
 
 gulp.task('default', ['style', 'js']);
