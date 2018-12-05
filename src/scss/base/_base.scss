@@ -1,0 +1,39 @@
+/* Universal Reset */
+*,
+*::after,
+*::before {
+  margin: 0;
+  padding: 0;
+  box-sizing: inherit;
+}
+
+/* Root Font Size */
+html {
+  //this define the size of 1rem
+  font-size: 62.5%; //1rem = 10px; 10px/16px = 62.5%
+
+  // example of media queries on fonts
+  @include respond(tab-land) {
+    font-size: 56.25%; //9px
+  }
+
+  @include respond(tab-port) {
+    font-size: 50%; //8px
+  }
+
+  @include respond(big-desktop) {
+    font-size: 75%; // 12px
+  }
+}
+
+/* Universal Font Definition */
+body {
+  box-sizing: border-box;
+}
+
+/* User selection color */
+
+::selection {
+  background-color: #f01;
+  color: #fff;
+}
